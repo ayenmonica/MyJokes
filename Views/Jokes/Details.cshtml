@@ -1,0 +1,57 @@
+﻿@model MyJokesWeb.Models.Jokes
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div style="color: white;">
+    <h4>Jokes</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.JokesQuestion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.JokesQuestion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.JokesAnswer)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.JokesAnswer)
+        </dd>
+    </dl>
+</div>
+<div>
+
+    @if (Model.Comments != null && Model.Comments.Any())
+    {
+        
+    
+    @foreach (var Comment in Model.Comments)
+    {
+            <div style="margin-bottom:10px;">
+
+        <p>@Comment.Content</p>
+        <small> @Comment.CreatedAt.</small> 
+
+        </div>
+    }
+    }
+    else
+    {
+        <p>No comments yet.</p>
+    }
+    <form asp-action="AddComment" method="post">
+        <input type="hidden" name="jokeId" value="@Model.Id" />
+
+        <input type="text" name="content" placeholder="Write comment..." required />
+
+        <button type="submit">Post Comment</button>
+    </form>
+
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

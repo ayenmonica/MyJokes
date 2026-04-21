@@ -1,0 +1,50 @@
+﻿@model IEnumerable<MyJokesWeb.Models.Jokes>
+
+@{
+    ViewData["Title"] = "Jokes";
+}
+
+<h1>Jokes</h1>
+
+<p>
+    <a asp-action="Create">Create New Joke</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Question</th>
+            <th>Answer</th>
+            <th>Likes</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.JokesQuestion</td>
+                <td>@item.JokesAnswer</td>
+                <td>@item.Likes</td>
+
+                <td>
+                    <!-- LIKE BUTTON -->
+                    <form asp-action="Like" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit">👍 Like</button>
+                    </form>
+
+                    <!-- DETAILS -->
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+
+                    <!-- EDIT -->
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+
+                    <!-- DELETE -->
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
